@@ -2,6 +2,6 @@ glfw
 build
 out
 .vscode
-./src/glad.c
-./include/glad
-./include/KHR
+src/glad.c
+include/glad
+include/KHR
