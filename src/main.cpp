@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #endif
 #include <iostream>
+#include <render_setup.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -35,6 +36,8 @@ int main() {
     }
 
     glViewport(0, 0, 1280, 720);
+
+    setupRendering(); 
 
     while (!glfwWindowShouldClose(window)) {       
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
