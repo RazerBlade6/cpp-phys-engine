@@ -1,10 +1,4 @@
-#ifndef HEADERS
-#define HEADERS
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#endif
-#include <iostream>
-#include <render_setup.h>
+#include <main.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -20,13 +14,13 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Template", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "Template", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to create window" << std::endl;
         glfwTerminate();
         return -1;
     }
-
+    
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -37,14 +31,17 @@ int main() {
 
     glViewport(0, 0, 1280, 720);
 
-    setupRendering(); 
-
     while (!glfwWindowShouldClose(window)) {       
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
             glfwSetWindowShouldClose(window, true);
         }
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        if (!renderTriangle()) {
+            std::cerr << "Failed to Render Triangle" << std::endl;
+            break;
+        }
 
         glfwSwapBuffers(window);
         glfwPollEvents();

@@ -16,27 +16,26 @@ const char *fragmentShaderSrc =
     "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
     "}\0";
 
-void setupRendering() {
-    std::uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER);
+int renderTriangle() {
+    std::uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER); 
     std::uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-    if (!renderTriangle(vertexShader, fragmentShader)) {
-        std::cerr << "Failed to Render Triangle" << std::endl;
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
-        return;
-    }
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-}
-
-int renderTriangle(std::uint32_t vertexShader, std::uint32_t fragmentShader) {
     float vertices[] = {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f};
+        0.0f, 0.5f, 0.0f
+    };
+
+    std::uint32_t indices[] = {
+        0, 1, 3
+    };
+    
     std::uint32_t VBO;
+    std::uint32_t EBO;
+    std::uint32_t VAO;
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -45,6 +44,11 @@ int renderTriangle(std::uint32_t vertexShader, std::uint32_t fragmentShader) {
     glCompileShader(vertexShader);
 
     if (!checkRenderStatus(vertexShader)) {
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        glDeleteVertexArrays(1, &VAO);
+        glDeleteBuffers(1, &VBO);
+        glDeleteBuffers(1, &EBO);
         return 1;
     }
 
@@ -52,6 +56,11 @@ int renderTriangle(std::uint32_t vertexShader, std::uint32_t fragmentShader) {
     glCompileShader(fragmentShader);
 
     if (!checkRenderStatus(fragmentShader)) {
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+        glDeleteVertexArrays(1, &VAO);
+        glDeleteBuffers(1, &VBO);
+        glDeleteBuffers(1, &EBO);
         return 1;
     }
     std::uint32_t shaderProgram = glCreateProgram();
@@ -64,7 +73,18 @@ int renderTriangle(std::uint32_t vertexShader, std::uint32_t fragmentShader) {
         return 1;
     }
 
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glEnableVertexAttribArray(0);
+
     glUseProgram(shaderProgram);
+
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
     return 0;
 }
 
