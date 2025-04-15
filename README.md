@@ -14,7 +14,7 @@
 
 ## Current Status
 
-No functionality besides generating a window.
+Generates a Window with a triangle
 
 ## Notes
 
