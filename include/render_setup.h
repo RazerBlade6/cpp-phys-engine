@@ -6,6 +6,7 @@
 #include <cinttypes>
 #include <string>
 #include <iostream>
+#include <cmath>
 
 typedef struct {
     std::uint32_t VBO;

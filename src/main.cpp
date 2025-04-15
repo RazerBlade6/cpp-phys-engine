@@ -14,7 +14,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Template", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Triangle", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to create window" << std::endl;
         glfwTerminate();
@@ -43,14 +43,12 @@ int main() {
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
             glfwSetWindowShouldClose(window, true);
         }
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
 
         if (!renderTriangle(shaderProgram, data)) {
             std::cerr << "Failed to Render Triangle" << std::endl;
             break;
         }
-
+    
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

@@ -8,16 +8,17 @@ std::uint32_t setupRenderProgram() {
         "layout (location = 0) in vec3 aPos;\n"
         "void main()\n"
         "{\n"
-        "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+        "   gl_Position = vec4(aPos, 1.0);\n"
         "}\0";
 
     std::uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     const char *fragmentShaderSrc =
         "#version 330 core\n"
-        "out vec4 FragColor;\n"
+        "uniform vec4 colour;\n"
+        "out vec4 FragColour;\n"
         "void main()\n"
         "{\n"
-        "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+        "FragColour = colour;\n"
         "}\0";
 
     glShaderSource(vertexShader, 1, &vertexShaderSrc, NULL);
@@ -56,9 +57,9 @@ std::uint32_t setupRenderProgram() {
 
 renderData setupRenderObjects() {
     float vertices[] = {
-        0.0f,  0.5f, 0.0f,
-        -0.25f, -0.25f, 0.0f,
-       0.25f, -0.25f, 0.0f,
+        0.0f,  0.5f, 0.75f,
+        -0.25f, -0.25f, -0.5f,
+       0.25f, -0.25f, -0.5f,
     };
 
     std::uint32_t indices[] = {
@@ -94,6 +95,15 @@ renderData setupRenderObjects() {
 
 int renderTriangle(std::uint32_t shaderProgram, renderData data) {
     glUseProgram(shaderProgram);
+
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    int colourLocation = glGetUniformLocation(shaderProgram, "colour");
+    float rValue = static_cast<float>(sin(time(NULL) + 1.5) / 2);
+    float gValue = static_cast<float>(sin(time(NULL)) / 2);
+    float bValue = static_cast<float>(sin(time(NULL) - 1.5) / 2);
+    glUniform4f(colourLocation, rValue, gValue, bValue, 0.7f);
 
     glBindVertexArray(data.VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

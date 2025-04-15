@@ -61,6 +61,6 @@ clean:
 info:
 	@echo "[*] Output dir:      ${OUT_DIR}"
 	@echo "[*] Object dir:      ${OBJ_DIR}"
-	@echo "[*] Source files:    ${SRC}"
+	@echo "[*] Source files:    ${SRCCPP}"
 	@echo "[*] Objects:         ${OBJECTS}"
 	@echo "[*] Dependencies:    ${DEPENDENCIES}"
