@@ -30,7 +30,6 @@ int main() {
     }
 
     std::uint32_t shaderProgram = setupRenderProgram();
-    std::cout << shaderProgram << "\n";
     if (!shaderProgram) {
         std::cerr << "Failed to Setup Rendering Artifacts" << std::endl;
         return -1;
