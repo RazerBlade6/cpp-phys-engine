@@ -41,16 +41,15 @@ std::uint32_t setupRenderProgram() {
     std::uint32_t shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    if (!checkProgramStatus(shaderProgram, "SHADER PROGRAM:")) {
-        glDeleteProgram(shaderProgram);
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
-        return 0;
-    }
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+
+    glLinkProgram(shaderProgram);
+    if (!checkProgramStatus(shaderProgram, "SHADER PROGRAM:")) {
+        glDeleteProgram(shaderProgram);
+        return 0;
+    }
 
     return shaderProgram;
 }
@@ -58,8 +57,8 @@ std::uint32_t setupRenderProgram() {
 renderData setupRenderObjects() {
     float vertices[] = {
         0.0f,  0.5f, 0.0f,
-        -0.433f, -0.25f, 0.0f,
-       0.433f, -0.25f, 0.0f,
+        -0.25f, -0.25f, 0.0f,
+       0.25f, -0.25f, 0.0f,
     };
 
     std::uint32_t indices[] = {
