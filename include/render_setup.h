@@ -1,7 +1,7 @@
 #ifndef HEADERS
-#define HEADERS
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+    #define HEADERS
+    #include <glad/glad.h>
+    #include <GLFW/glfw3.h>
 #endif
 #include <cinttypes>
 #include <string>

@@ -40,7 +40,7 @@ int main() {
     renderData data = setupRenderObjects();
 
     while (!glfwWindowShouldClose(window)) {       
-        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        if (checkKeyPress(window, GLFW_KEY_ESCAPE)) {
             glfwSetWindowShouldClose(window, true);
         }
 

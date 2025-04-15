@@ -100,10 +100,10 @@ int renderTriangle(std::uint32_t shaderProgram, renderData data) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     int colourLocation = glGetUniformLocation(shaderProgram, "colour");
-    float rValue = static_cast<float>(sin(time(NULL) + 1.5) / 2);
+    float rValue = static_cast<float>(sin(time(NULL) + 2 * M_PI / 3) / 2);
     float gValue = static_cast<float>(sin(time(NULL)) / 2);
-    float bValue = static_cast<float>(sin(time(NULL) - 1.5) / 2);
-    glUniform4f(colourLocation, rValue, gValue, bValue, 0.7f);
+    float bValue = static_cast<float>(sin(time(NULL) - 2 * M_PI / 3) / 2);
+    glUniform4f(colourLocation, rValue, gValue, bValue, 0.3f);
 
     glBindVertexArray(data.VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
